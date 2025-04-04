@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "api/download.js",
   "dependencies": {
-    "@sparticuz/chromium-min": "^1.0.0",
-    "puppeteer-core": "^19.0.0"
+    "puppeteer-core": "^19.0.0",
+    "@sparticuz/chromium-min": "^133.0.0"
   }
 }
