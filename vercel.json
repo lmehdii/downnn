@@ -1,0 +1,10 @@
+{
+  "builds": [
+    { "src": "api/download.js", "use": "@vercel/node" },
+    { "src": "public/index.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/download", "dest": "api/download.js" },
+    { "src": "/(.*)", "dest": "public/index.html" }
+  ]
+}

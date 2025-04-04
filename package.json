@@ -1,0 +1,9 @@
+{
+  "name": "scribd-downloader",
+  "version": "1.0.0",
+  "main": "api/download.js",
+  "dependencies": {
+    "@sparticuz/chromium-min": "^1.0.0",
+    "puppeteer-core": "^19.0.0"
+  }
+}
