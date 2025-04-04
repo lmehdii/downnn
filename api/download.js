@@ -1,5 +1,5 @@
-const chromium = require('@sparticuz/chromium-min');
 const puppeteer = require('puppeteer-core');
+const chromium = require('@sparticuz/chromium');
 
 function extractScribdInfo(url) {
   const regex = /scribd\.com\/(?:document|doc)\/(\d+)\/([^?]+)/;
@@ -34,13 +34,16 @@ module.exports = async (req, res) => {
   let browser;
   try {
     const { docId, title } = extractScribdInfo(scribdUrl);
+    console.log(`Extracted Document ID: ${docId}`);
+    console.log(`Extracted Title: ${title}`);
+
     const ilideLink = generateIlideLink(docId, title);
+    console.log(`Generated ilide.info link: ${ilideLink}`);
 
     browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
+      args: chromium.args.concat(['--no-sandbox', '--disable-setuid-sandbox']),
       executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
+      headless: true, // or 'new' if using puppeteer >= 19.0.0
     });
 
     const page = await browser.newPage();
@@ -50,7 +53,7 @@ module.exports = async (req, res) => {
 
     res.status(200).json({ message: 'Processing complete' });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   } finally {
     if (browser) {
